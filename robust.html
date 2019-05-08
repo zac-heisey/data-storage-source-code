@@ -61,21 +61,35 @@
 			// Get all form inputs
 			var inputs = document.querySelectorAll('input, textarea');
 
-			// Loop through each input and local data from localStorage
-			for (var i = 0; i < inputs.length; i++) {
-				// Check for saved data in localStorage
-				var saved = localStorage.getItem('formAutosaveData_' + inputs[i].id);
-				if (!saved) continue;
+      // Get any existing saved form data from localStorage
+      var saved = localStorage.getItem('formAutosaveData');
+      // If there are saved fields, load them
+      if (saved) {
+        // Convert saved field data back to object
+        saved = JSON.parse(saved);
+        // Loop through each input and local data from localStorage
+  			for (var i = 0; i < inputs.length; i++) {
+  				// Check for saved data in localStorage
+          var val = saved[inputs[i].id];
+  				if (!val) continue;
 
-				// If there is saved data, load it into the form
-				inputs[i].value = saved;
+  				// If there is saved data, load it into the form
+  				inputs[i].value = val;
 
-			}
+  			}
+      }
 
 			// Listen for form input changes
       document.addEventListener('input', function(event) {
+        // Get any existing saved form data from localStorage
+        var saved = localStorage.getItem('formAutosaveData');
+        // If there is saved data, parse it
+        // Otherwise create a new object
+        saved = saved ? JSON.parse(saved) : {};
+        // Push field data to saved data object
+        saved[event.target.id] = event.target.value;
 				// Save field value to localStorage
-				localStorage.setItem('formAutosaveData_' + event.target.id, event.target.value);
+				localStorage.setItem('formAutosaveData', JSON.stringify(saved));
 			}, false);
 
 		</script>
