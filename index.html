@@ -58,7 +58,12 @@
 
 		<!-- Scripts -->
 		<script>
-			// Code goes here...
+			// Listen for form input changes
+      document.addEventListener('input', function(event) {
+				// Save field value to localStorage
+				localStorage.setItem('formAutosaveData_' + event.target.id, event.target.value);
+			}, false);
+
 		</script>
 	</body>
 </html>
