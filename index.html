@@ -58,6 +58,20 @@
 
 		<!-- Scripts -->
 		<script>
+			// Get all form inputs
+			var inputs = document.querySelectorAll('input, textarea');
+
+			// Loop through each input and local data from localStorage
+			for (var i = 0; i < inputs.length; i++) {
+				// Check for saved data in localStorage
+				var saved = localStorage.getItem('formAutosaveData_' + inputs[i].id);
+				if (!saved) continue;
+
+				// If there is saved data, load it into the form
+				inputs[i].value = saved;
+
+			}
+
 			// Listen for form input changes
       document.addEventListener('input', function(event) {
 				// Save field value to localStorage
